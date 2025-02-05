@@ -1,23 +1,23 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param } from '@nestjs/common';
 import { AnimalsService } from './animals.service';
 
-@Controller('api/animals')  // ✅ Now matches the API URL
+@Controller('api') // ✅ Now matches the API URL
 export class AnimalsController {
+
   constructor(private readonly animalsService: AnimalsService) {}
 
-  @Get()
-  async getAllAnimals() {
-    return this.animalsService.findAll();
+  @Get('/animals')
+  async getAnimalsList() {
+    return this.animalsService.getAllAnimals();
   }
 
-  @Post()
-  async createAnimal(@Body() body: { name: string; type: string }) {
-    return this.animalsService.create(body.name, body.type);
+  @Post('/animals/:animal_id/feed')
+  async feedAnimal(@Param('animal_id') animal_id: string) {
+    return this.animalsService.feed(animal_id);
   }
 
-  @Post(':id/feed')
-  async feedAnimal(@Param('id') id: string) {
-    return this.animalsService.feed(id);
+  @Get('/bidzina/status')
+  async getBidzinaStatus() {
+    return this.animalsService.getBidzinaStatus();
   }
 }
-
