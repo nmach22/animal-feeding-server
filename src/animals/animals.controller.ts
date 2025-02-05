@@ -11,8 +11,8 @@ export class AnimalsController {
   }
 
   @Post('/animals/:animal_id/feed')
-  feedAnimal(@Param('animal_id') animal_id: string) {
-    return this.animalsService.feed(animal_id);
+  async feedAnimal(@Param('animal_id') animal_id: number) {
+    return await this.animalsService.feed(animal_id);
   }
 
   @Get('/bidzina/status')
