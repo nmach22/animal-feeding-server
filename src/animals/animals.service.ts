@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Animal } from './entities/animal';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 export class AnimalsService {
@@ -27,42 +27,27 @@ export class AnimalsService {
     };
   }
 
-  getBidzinaStatus() {
-    // return Promise.resolve(undefined);
-    return {
-      status: 'DEFAULT',
-    };
+  async getBidzinaStatus() {
+    const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
+
+    const sum = await this.animalRepository.sum('gratitude_count', {
+      update_date: MoreThan(fiveMinutesAgo),
+    });
+
+    const total_gratitude_count = sum || 0;
+    if (total_gratitude_count >= 0 && total_gratitude_count <= 99) {
+      return 'DEFAULT';
+    } else if (total_gratitude_count >= 100 && total_gratitude_count <= 199) {
+      return 'HAPPY';
+    }
+
+    return 'PUTIN';
   }
 
   async getAllAnimals() {
-    return await this.animalRepository.find();
-    // return {
-    //   animals: [
-    //     {
-    //       id: 1,
-    //       name: 'ღორი',
-    //       type: 'MASTER',
-    //       image_url: 'https://images.ge/grutunagori',
-    //       gratitude_count: 0,
-    //       update_date: '12:00:00-12:24:1995',
-    //     },
-    //     {
-    //       id: 2,
-    //       name: 'ძროხა',
-    //       type: 'SLAVE',
-    //       image_url: 'https://images.ge/dzrokha',
-    //       gratitude_count: 1,
-    //       update_date: '12:00:00-12:24:1995',
-    //     },
-    //     {
-    //       id: 3,
-    //       name: 'ცხვარი',
-    //       type: 'SLAVE',
-    //       image_url: 'https://images.ge/ckhvari',
-    //       gratitude_count: 0,
-    //       update_date: '12:00:00-12:24:1995',
-    //     },
-    //   ],
-    // };
+    const animals = await this.animalRepository.find();
+    return {
+      animals: animals,
+    };
   }
 }

@@ -16,7 +16,7 @@ export class AnimalsController {
   }
 
   @Get('/bidzina/status')
-  getBidzinaStatus() {
-    return this.animalsService.getBidzinaStatus();
+  async getBidzinaStatus() {
+    return await this.animalsService.getBidzinaStatus();
   }
 }
