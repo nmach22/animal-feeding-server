@@ -62,7 +62,9 @@ export class AnimalsService {
   }
 
   async getAllAnimals() {
-    const animals = await this.animalRepository.find();
+    const animals = await this.animalRepository.find({
+      order: { id: 'ASC' },
+    });
     return {
       animals: animals,
     };

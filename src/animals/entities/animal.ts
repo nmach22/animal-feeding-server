@@ -19,6 +19,9 @@ export class Animal {
   @Column({ default: 0 })
   gratitude_count: number;
 
+  @Column()
+  image_url: string;
+
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
