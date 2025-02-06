@@ -21,7 +21,7 @@ export class AnimalsController {
   }
 
   @Post('/music/toggle')
-  async toggleMusic() {
-    return await this.animalsService.toggleMusic();
+  toggleMusic() {
+    return this.animalsService.toggleMusic();
   }
 }
