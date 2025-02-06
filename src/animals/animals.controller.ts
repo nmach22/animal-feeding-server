@@ -19,4 +19,9 @@ export class AnimalsController {
   async getBidzinaStatus() {
     return await this.animalsService.getBidzinaStatus();
   }
+
+  @Post('/music/toggle')
+  async toggleMusic() {
+    return await this.animalsService.toggleMusic();
+  }
 }

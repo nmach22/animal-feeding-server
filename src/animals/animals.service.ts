@@ -13,6 +13,8 @@ export class AnimalsService {
     @InjectRepository(Animal) private animalRepository: Repository<Animal>,
   ) {}
 
+  private currentMusic: string = 'ChemiSakartveloAqAris.mp3';
+
   async feed(id: number) {
     const animal = await this.animalRepository.findOne({ where: { id } });
 
@@ -68,5 +70,14 @@ export class AnimalsService {
     return {
       animals: animals,
     };
+  }
+
+  toggleMusic() {
+    if (this.currentMusic === 'ChemiSakartveloAqAris.mp3') {
+      this.currentMusic = 'USSR.mp3';
+    } else {
+      this.currentMusic = 'ChemiSakartveloAqAris.mp3';
+    }
+    return { music: this.currentMusic };
   }
 }
